@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.timmyg.kotlinproject.data.NoteRepository
 
-class MainVeiwModel(): ViewModel() {
+class MainViewModel(): ViewModel() {
 
     private val viewStateLiveData: MutableLiveData<MainViewState> = MutableLiveData()
 
