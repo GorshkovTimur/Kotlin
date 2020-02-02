@@ -1,5 +1,6 @@
 package com.timmyg.kotlinproject
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -14,9 +15,10 @@ class NotesRVAdapter: RecyclerView.Adapter<NotesRVAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)= ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_note, parent, false)
+        )
+
 
     override fun getItemCount(): Int = notes.size
 
