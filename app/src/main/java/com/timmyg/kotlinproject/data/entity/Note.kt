@@ -1,7 +1,7 @@
 package com.timmyg.kotlinproject.data.entity
 
-data class Note (
-        val id:String,
+data class Note(
+        val id: String,
         val title:String,
         val text:String,
         val color:Color)
