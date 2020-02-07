@@ -3,19 +3,37 @@ package com.timmyg.kotlinproject
 import androidx.appcompat.app.AppCompatActivity
 
 import android.os.Bundle
-import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var viewModel:MainViewModel
+    lateinit var adapter: NotesRVAdapter
 
-    val MESSAGE_TEXT = "I just wanna to say hello"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        btn_toast.setOnClickListener{
-            Toast.makeText(this, MESSAGE_TEXT, Toast.LENGTH_SHORT).show()
+
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
+        recycler_view.layoutManager = GridLayoutManager(this, 2)
+        adapter = NotesRVAdapter { note ->
+            NoteActivity.start(this, note)
+        }
+        recycler_view.adapter = adapter
+
+        viewModel.viewState().observe(this, Observer{
+            it?.let {adapter.notes = it.notes}
+        })
+
+        fab.setOnClickListener{
+            NoteActivity.start(this)
         }
     }
 }
