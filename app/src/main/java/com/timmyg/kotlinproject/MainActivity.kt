@@ -23,12 +23,17 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
         recycler_view.layoutManager = GridLayoutManager(this, 2)
-        adapter = NotesRVAdapter()
+        adapter = NotesRVAdapter { note ->
+            NoteActivity.start(this, note)
+        }
         recycler_view.adapter = adapter
 
         viewModel.viewState().observe(this, Observer{
             it?.let {adapter.notes = it.notes}
         })
 
+        fab.setOnClickListener{
+            NoteActivity.start(this)
+        }
     }
 }
