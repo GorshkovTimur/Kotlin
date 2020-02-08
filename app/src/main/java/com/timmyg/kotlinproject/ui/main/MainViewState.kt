@@ -1,4 +1,4 @@
-package com.timmyg.kotlinproject
+package com.timmyg.kotlinproject.ui.main
 
 import com.timmyg.kotlinproject.data.entity.Note
 

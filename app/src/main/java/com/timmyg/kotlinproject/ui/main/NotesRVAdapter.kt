@@ -1,10 +1,11 @@
-package com.timmyg.kotlinproject
+package com.timmyg.kotlinproject.ui.main
 
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.timmyg.kotlinproject.R
 import com.timmyg.kotlinproject.data.entity.Note
 import kotlinx.android.synthetic.main.item_note.view.*
 

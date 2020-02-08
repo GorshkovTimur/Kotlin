@@ -1,4 +1,4 @@
-package com.timmyg.kotlinproject
+package com.timmyg.kotlinproject.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

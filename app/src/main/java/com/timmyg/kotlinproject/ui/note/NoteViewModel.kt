@@ -1,4 +1,4 @@
-package com.timmyg.kotlinproject
+package com.timmyg.kotlinproject.ui.note
 
 import androidx.lifecycle.ViewModel
 import com.timmyg.kotlinproject.data.NoteRepository

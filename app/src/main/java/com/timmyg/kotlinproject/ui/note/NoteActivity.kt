@@ -1,4 +1,4 @@
-package com.timmyg.kotlinproject
+package com.timmyg.kotlinproject.ui.note
 
 import android.content.Context
 import android.content.Intent
@@ -7,8 +7,8 @@ import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.timmyg.kotlinproject.R
 import com.timmyg.kotlinproject.data.entity.Note
 import kotlinx.android.synthetic.main.activity_note.*
 import java.text.SimpleDateFormat
@@ -28,7 +28,7 @@ class NoteActivity: AppCompatActivity() {
     }
 
     private var note:Note? = null
-    lateinit var viewModel:NoteViewModel
+    lateinit var viewModel: NoteViewModel
 
     val textChangeListener = object :TextWatcher{
         override fun afterTextChanged(p0: Editable?) {
