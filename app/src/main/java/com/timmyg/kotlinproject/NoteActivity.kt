@@ -50,9 +50,9 @@ class NoteActivity: AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(NoteViewModel::class.java)
 
-        supportActionBar?.title =note.let {
-            SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault()).format(it!!.lastChange)
-        }
+        supportActionBar?.title = note?.let {
+            SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault()).format(it.lastChange)
+        } ?: getString(R.string.new_note_title)
 
         initView()
 
@@ -87,4 +87,3 @@ class NoteActivity: AppCompatActivity() {
             Date())
 
     }
-}
