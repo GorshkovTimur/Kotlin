@@ -25,7 +25,7 @@ class NoteViewModel: BaseViewModel <Note?, NoteViewState>() {
             override fun onChanged(t: NoteResult?) {
                 t ?: return
                 when (t){
-                    is NoteResult.Succes<*> -> {
+                    is NoteResult.Success<*> -> {
                         viewStateLiveData.value = NoteViewState(note = t.data as? Note)
                     }
                     is NoteResult.Error -> {

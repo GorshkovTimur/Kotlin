@@ -13,7 +13,7 @@ class MainViewModel(): BaseViewModel<List<Note>?, MainViewState>() {
         override fun onChanged(t: NoteResult?) {
             t ?: return
             when (t){
-                is NoteResult.Succes<*> -> {
+                is NoteResult.Success<*> -> {
                     viewStateLiveData.value = MainViewState(notes = t.data as? List<Note>)
                 }
                 is NoteResult.Error -> {

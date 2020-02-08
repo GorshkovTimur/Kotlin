@@ -26,11 +26,10 @@ class MainActivity : BaseActivity<List<Note>? , MainViewState>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         recycler_view.layoutManager = GridLayoutManager(this, 2)
         adapter = NotesRVAdapter { note ->
-            NoteActivity.start(this, note)
+            NoteActivity.start(this, note.id)
         }
         recycler_view.adapter = adapter
 
