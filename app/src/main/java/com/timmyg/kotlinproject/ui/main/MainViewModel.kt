@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.timmyg.kotlinproject.data.NoteRepository
+import com.timmyg.kotlinproject.data.entity.Note
+import com.timmyg.kotlinproject.ui.base.BaseViewModel
 
-class MainViewModel(): ViewModel() {
-
-    private val viewStateLiveData: MutableLiveData<MainViewState> = MutableLiveData()
+class MainViewModel(): BaseViewModel<List<Note>?, MainViewState>() {
 
     init {
 
