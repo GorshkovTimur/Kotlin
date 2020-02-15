@@ -45,14 +45,12 @@ class FireStoreProvider: RemoteDataProvider {
                 }
     }
 
-    override fun saveNote(note: Note): LiveData<NoteResult> {
-        val result = MutableLiveData<NoteResult>()
+    override fun saveNote(note: Note) = MutableLiveData<NoteResult>().apply {
         noteReference.document(note.id).set(note)
                 .addOnSuccessListener {
-                    result.value = NoteResult.Success(note)
+                    value = NoteResult.Success(note)
                 }.addOnFailureListener{
-                    result.value = NoteResult.Error(it)
+                    value = NoteResult.Error(it)
                 }
-        return result
     }
 }
