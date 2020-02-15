@@ -25,11 +25,7 @@ class FireStoreProvider: RemoteDataProvider {
                value = NoteResult.Error(e)
             } ?: let {
                 snapshot?.let { snapshot ->
-                    val notes = mutableListOf<Note>()
-                    for (doc: QueryDocumentSnapshot in snapshot) {
-                        notes.add(doc.toObject(Note::class.java))
-                    }
-                    value = NoteResult.Success(notes)
+                    value = NoteResult.Success(snapshot.map { it.toObject(Note::class.java) })
                 }
             }
         }
