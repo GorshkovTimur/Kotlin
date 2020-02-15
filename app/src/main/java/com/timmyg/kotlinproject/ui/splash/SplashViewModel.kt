@@ -8,13 +8,12 @@ class SplashViewModel:BaseViewModel<Boolean?, SplashViewState>() {
 
     fun requestUser(){
         NoteRepository.getCurrentUser().observeForever{
-            viewStateLiveData.value = if (it!=null){
+            viewStateLiveData.value = it?.let{
                 SplashViewState(authenticated = true)
-            } else {
-                SplashViewState(error = NoAuthException())
+            } ?: let { SplashViewState(error = NoAuthException()) }
+
             }
         }
 
 
     }
-}
