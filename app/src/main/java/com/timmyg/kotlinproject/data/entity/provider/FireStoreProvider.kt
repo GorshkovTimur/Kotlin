@@ -38,33 +38,50 @@ class FireStoreProvider: RemoteDataProvider {
     }
 
     override fun subscribeToAllNotes() = MutableLiveData<NoteResult>().apply {
-        UserNoteCollection.addSnapshotListener { snapshot, e ->
-            e?.let {
-               value = NoteResult.Error(e)
-            } ?: let {
-                snapshot?.let { snapshot ->
-                    value = NoteResult.Success(snapshot.map { it.toObject(Note::class.java) })
+        try {
+            UserNoteCollection.addSnapshotListener { snapshot, e ->
+                e?.let {
+                    throw it
+                } ?: let {
+                    snapshot?.let { snapshot ->
+                        value = NoteResult.Success(snapshot.map { it.toObject(Note::class.java) })
+                    }
                 }
             }
+
+        } catch (e: Throwable){
+            value = NoteResult.Error(e)
         }
+
     }
 
     override fun getNoteById(id: String)= MutableLiveData<NoteResult>().apply {
+        try {
+            UserNoteCollection.document(id).get()
+                    .addOnSuccessListener {snap->
+                        value = NoteResult.Success(snap.toObject(Note::class.java))
+                    }.addOnFailureListener{
+                        throw  it
+                    }
 
-        UserNoteCollection.document(id).get()
-                .addOnSuccessListener {snap->
-                    value = NoteResult.Success(snap.toObject(Note::class.java))
-                }.addOnFailureListener{
-                    value = NoteResult.Error(it)
-                }
+        } catch (e: Throwable){
+            value = NoteResult.Error(e)
+        }
+
     }
 
     override fun saveNote(note: Note) = MutableLiveData<NoteResult>().apply {
-        UserNoteCollection.document(note.id).set(note)
-                .addOnSuccessListener {
-                    value = NoteResult.Success(note)
-                }.addOnFailureListener{
-                    value = NoteResult.Error(it)
-                }
+        try {
+            UserNoteCollection.document(note.id).set(note)
+                    .addOnSuccessListener {
+                        value = NoteResult.Success(note)
+                    }.addOnFailureListener{
+                        throw it
+                    }
+
+        } catch (e: Throwable){
+            value = NoteResult.Error(e)
+        }
+
     }
 }
