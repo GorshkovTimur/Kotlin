@@ -7,10 +7,7 @@ import com.timmyg.kotlinproject.data.entity.NoteResult
 import com.timmyg.kotlinproject.data.entity.provider.FireStoreProvider
 import com.timmyg.kotlinproject.data.entity.provider.RemoteDataProvider
 
-object NoteRepository {
-
-private val remoteProvider: RemoteDataProvider = FireStoreProvider()
-
+class NoteRepository(val remoteProvider: RemoteDataProvider) {
     fun getNotes() = remoteProvider.subscribeToAllNotes()
     fun saveNote(note: Note) = remoteProvider.saveNote(note)
     fun getNoteById(id: String) = remoteProvider.getNoteById(id)
