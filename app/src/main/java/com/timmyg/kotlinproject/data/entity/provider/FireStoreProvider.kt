@@ -10,14 +10,13 @@ import com.timmyg.kotlinproject.data.entity.NoteResult
 import com.timmyg.kotlinproject.data.entity.User
 import com.timmyg.kotlinproject.data.entity.errors.NoAuthException
 
-class FireStoreProvider: RemoteDataProvider {
+class FireStoreProvider(private  val firebaseAuth: FirebaseAuth, private val store: FirebaseFirestore): RemoteDataProvider {
 
         companion object{
             private const val NOTES_COLLECTION = "notes"
             private const val USER_COLLECTION = "users"
         }
 
-    private val store by lazy { FirebaseFirestore.getInstance()}
 
     private val UserNoteCollection : CollectionReference
     get() =
@@ -28,7 +27,7 @@ class FireStoreProvider: RemoteDataProvider {
 
 
     private val currentUser
-            get() = FirebaseAuth.getInstance().currentUser
+            get() = firebaseAuth.currentUser
 
 
     override fun getCurrentUser() = MutableLiveData<User?>().apply {
