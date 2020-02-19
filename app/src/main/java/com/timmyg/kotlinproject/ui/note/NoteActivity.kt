@@ -6,17 +6,22 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.timmyg.kotlinproject.R
+import com.timmyg.kotlinproject.common.getColorInt
 import com.timmyg.kotlinproject.data.entity.Note
 import com.timmyg.kotlinproject.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_note.*
+import org.jetbrains.anko.alert
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NoteActivity: BaseActivity<Note?, NoteViewState>() {
+class NoteActivity: BaseActivity<NoteViewState.Data, NoteViewState>() {
     companion object{
         private val EXTRA_NOTE = NoteActivity::class.java.name + "EXTRA NOTE"
         private const val DATE_TIME_FORMAT = "dd.MM.yy HH:mm"
@@ -29,10 +34,9 @@ class NoteActivity: BaseActivity<Note?, NoteViewState>() {
     }
 
     private var note:Note? = null
-    override val viewModel: NoteViewModel by lazy {
-        ViewModelProvider(this).get(NoteViewModel::class.java)
-    }
+    override val model: NoteViewModel by viewModel()
     override val layoutRes = R.layout.activity_note
+    var color = Note.Color.WHITE
 
     val textChangeListener = object :TextWatcher{
         override fun afterTextChanged(p0: Editable?) {
@@ -49,47 +53,94 @@ class NoteActivity: BaseActivity<Note?, NoteViewState>() {
 
         val noteId = intent.getStringExtra(EXTRA_NOTE)
         noteId?.let {
-            viewModel.loadNote(it)
+            model.loadNote(it)
         } ?: let {
             supportActionBar?.title = getString(R.string.new_note_title)
                 }
         }
 
 
-    override fun renderData(data: Note?) {
-        this.note = data
-        supportActionBar?.title = this.note?.let {
-            SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault()).format(note!!.lastChange)
-        } ?: let {
-            getString(R.string.new_note_title)
-        }
+    override fun renderData(data: NoteViewState.Data) {
+        if (data.isDeleted) finish()
+        this.note = data.note
         initView()
     }
 
+
     fun initView() {
-        note?.let {
-            et_title.setText(note?.title ?:"")
-            et_body.setText(note?.text ?:"")
+        note?.let { note ->
+            removeEditListener()
+            et_title.setText(note.title)
+            et_body.setText(note.text)
+            toolbar.setBackgroundColor(note.color.getColorInt(this))
+            supportActionBar?.title = SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault()).format(note.lastChange)
+        } ?: let {
+            supportActionBar?.title =   getString(R.string.new_note_title)
         }
 
-        et_title.addTextChangedListener(textChangeListener)
-        et_body.addTextChangedListener(textChangeListener)
+        setEditListener()
+
+        colorPicker.onColorClickListener = {
+            toolbar.setBackgroundColor(color.getColorInt(this))
+            color = it
+            saveNote()
+        }
     }
 
-    fun saveNote(){
-        if (et_title != null && et_body.text!!.length < 3 ) return
+    private fun removeEditListener(){
+        et_title.removeTextChangedListener(textChangeListener)
+        et_body.removeTextChangedListener(textChangeListener)
+    }
+
+    private fun setEditListener(){
+        et_title.removeTextChangedListener(textChangeListener)
+        et_body.removeTextChangedListener(textChangeListener)
+    }
+
+    fun saveNote() {
+        if (et_title.text == null || et_title.text!!.length < 3) return
 
         note = note?.copy(
                 title = et_title.text.toString(),
-                text = et_body.text.toString()
-        ) ?: Note(UUID.randomUUID().toString(),
+                text = et_body.text.toString(),
+                lastChange = Date(),
+                color = color
+        ) ?: Note(
+                UUID.randomUUID().toString(),
                 et_title.text.toString(),
                 et_body.text.toString(),
-                Note.Color.YELLOW,
-                Date())
+                color
+        )
 
-        note?.let { viewModel.save(it) }
-
+        note?.let {
+            model.save(it)
+        }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?) = menuInflater.inflate(R.menu.note, menu).let { true }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> onBackPressed().let { true }
+        R.id.palette -> togglePalette().let { true }
+        R.id.delete -> deleteNote().let { true }
+        else -> super.onOptionsItemSelected(item)
     }
+
+    private fun togglePalette() {
+        if (colorPicker.isOpen) {
+            colorPicker.close()
+        } else {
+            colorPicker.open()
+        }
+    }
+
+    private fun deleteNote() {
+        alert {
+            messageResource = R.string.note_delete_message
+            negativeButton(R.string.note_delete_cancel) { dialog -> dialog.dismiss() }
+            positiveButton(R.string.note_delete_ok) { model.deleteNote() }
+        }.show()
+    }
+
+}
+

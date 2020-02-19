@@ -1,14 +1,14 @@
 package com.timmyg.kotlinproject.ui.splash
 
 import android.os.Handler
-import androidx.lifecycle.ViewModelProvider
+
 import com.timmyg.kotlinproject.ui.base.BaseActivity
 import com.timmyg.kotlinproject.ui.main.MainActivity
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class SplashActivity: BaseActivity<Boolean?, SplashViewState>() {
-    override val model by lazy {
-        ViewModelProvider(this).get(SplashViewModel::class.java)
-    }
+
+    override val model: SplashViewModel by viewModel()
 
     override val layoutRes: Int? = null
 

@@ -1,6 +1,7 @@
 package com.timmyg.kotlinproject.data.entity.provider
 
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -82,5 +83,19 @@ class FireStoreProvider(private  val firebaseAuth: FirebaseAuth, private val sto
             value = NoteResult.Error(e)
         }
 
+    }
+
+    override fun deleteNote(nodeId: String): LiveData<NoteResult> =MutableLiveData<NoteResult>().apply {
+        try {
+            UserNoteCollection.document(nodeId).delete()
+                    .addOnSuccessListener {
+                        value = NoteResult.Success(null)
+                    }.addOnFailureListener {
+                        throw it
+                    }
+
+        } catch (e: Throwable) {
+            value = NoteResult.Error(e)
+        }
     }
 }

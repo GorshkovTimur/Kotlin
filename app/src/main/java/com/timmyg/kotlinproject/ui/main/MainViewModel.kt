@@ -7,7 +7,7 @@ import com.timmyg.kotlinproject.data.entity.Note
 import com.timmyg.kotlinproject.data.entity.NoteResult
 import com.timmyg.kotlinproject.ui.base.BaseViewModel
 
-class MainViewModel(): BaseViewModel<List<Note>?, MainViewState>() {
+class MainViewModel(private val noteRepository: NoteRepository): BaseViewModel<List<Note>?, MainViewState>() {
 
     private val notesObserver = object : Observer<NoteResult>{
         override fun onChanged(t: NoteResult?) {
@@ -24,7 +24,7 @@ class MainViewModel(): BaseViewModel<List<Note>?, MainViewState>() {
 
     }
 
-    private val repositoryNotes = NoteRepository.getNotes()
+    private val repositoryNotes = noteRepository.getNotes()
 
     init {
         viewStateLiveData.value = MainViewState()
