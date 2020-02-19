@@ -13,12 +13,12 @@ import com.timmyg.kotlinproject.ui.note.NoteActivity
 import com.timmyg.kotlinproject.R
 import com.timmyg.kotlinproject.data.entity.Note
 import com.timmyg.kotlinproject.ui.base.BaseActivity
-import com.timmyg.kotlinproject.ui.splash.SplashActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.alert
 import org.koin.android.viewmodel.ext.android.viewModel
+import ru.geekbrains.gb_kotlin.ui.splash.SplashActivity
 
-class MainActivity : BaseActivity<List<Note>? , MainViewState>(){
+class MainActivity : BaseActivity<List<Note>?, MainViewState>(){
 
     companion object{
         fun start(context: Context) = Intent(context, MainActivity::class.java).apply {

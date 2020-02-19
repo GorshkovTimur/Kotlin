@@ -12,7 +12,6 @@ class App: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        FirebaseApp.initializeApp(this)
         startKoin(this, listOf(appModule, splashModule, noteModule))
     }
 }

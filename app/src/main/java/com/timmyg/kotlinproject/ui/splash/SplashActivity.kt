@@ -1,12 +1,14 @@
-package com.timmyg.kotlinproject.ui.splash
+package ru.geekbrains.gb_kotlin.ui.splash
 
 import android.os.Handler
-
 import com.timmyg.kotlinproject.ui.base.BaseActivity
 import com.timmyg.kotlinproject.ui.main.MainActivity
+import com.timmyg.kotlinproject.ui.splash.SplashViewModel
+import com.timmyg.kotlinproject.ui.splash.SplashViewState
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class SplashActivity: BaseActivity<Boolean?, SplashViewState>() {
+
+class SplashActivity : BaseActivity<Boolean?, SplashViewState>() {
 
     override val model: SplashViewModel by viewModel()
 
@@ -14,11 +16,11 @@ class SplashActivity: BaseActivity<Boolean?, SplashViewState>() {
 
     override fun onResume() {
         super.onResume()
-        Handler().postDelayed({model.requestUser()}, 1000)
+        Handler().postDelayed({ model.requestUser() }, 1000)
     }
 
     override fun renderData(data: Boolean?) {
-        data?.takeIf { it }.let {
+        data?.takeIf { it }?.let {
             startMainActivity()
         }
     }
