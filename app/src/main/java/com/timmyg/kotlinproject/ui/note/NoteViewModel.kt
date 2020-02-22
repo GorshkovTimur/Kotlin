@@ -1,7 +1,6 @@
 package com.timmyg.kotlinproject.ui.note
 
 
-import androidx.lifecycle.Observer
 import com.timmyg.kotlinproject.data.NoteRepository
 import com.timmyg.kotlinproject.data.entity.Note
 import com.timmyg.kotlinproject.data.entity.NoteResult

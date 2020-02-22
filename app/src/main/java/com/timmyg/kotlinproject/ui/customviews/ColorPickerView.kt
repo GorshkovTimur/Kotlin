@@ -1,4 +1,4 @@
-package ru.geekbrains.gb_kotlin.ui.customviews
+package com.timmyg.kotlinproject.ui.customviews
 
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator

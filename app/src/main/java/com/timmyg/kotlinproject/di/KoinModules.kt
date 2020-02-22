@@ -22,7 +22,7 @@ val splashModule = module{
     viewModel {SplashViewModel(get())}
     }
 
-val mainhModule = module{
+val mainModule = module{
     viewModel { MainViewModel(get()) }
 }
 

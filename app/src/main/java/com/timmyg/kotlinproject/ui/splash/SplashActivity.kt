@@ -1,10 +1,8 @@
-package ru.geekbrains.gb_kotlin.ui.splash
+package com.timmyg.kotlinproject.ui.splash
 
 import android.os.Handler
 import com.timmyg.kotlinproject.ui.base.BaseActivity
 import com.timmyg.kotlinproject.ui.main.MainActivity
-import com.timmyg.kotlinproject.ui.splash.SplashViewModel
-import com.timmyg.kotlinproject.ui.splash.SplashViewState
 import org.koin.android.viewmodel.ext.android.viewModel
 
 

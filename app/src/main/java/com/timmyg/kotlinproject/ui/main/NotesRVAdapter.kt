@@ -1,6 +1,5 @@
 package com.timmyg.kotlinproject.ui.main
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +30,6 @@ class NotesRVAdapter(val onItemViewClick : ((note:Note)->Unit)?=null) : Recycler
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        holder.bind(notes[position])
     }
-
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
