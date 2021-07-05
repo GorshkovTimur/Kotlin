@@ -1,4 +1,15 @@
 <resources>
-    <string name="app_name">KotlinProject</string>
+    <string name="app_name">Notes app</string>
     <string name="button_name">hello</string>
+    <string name="title_text">Очень важная заметка</string>
+    <string name="note_text">Тело заметки</string>
+    <string name="new_note_title" />
+    <string name="Logout">Выход</string>
+    <string name="exit">Выход</string>
+    <string name="sure">Вы уверены?</string>
+    <string name="note_change_color">Изменить цвет</string>
+    <string name="note_delete">Удалить</string>
+    <string name="note_delete_message">Удалить?</string>
+    <string name="note_delete_cancel">отмена</string>
+    <string name="note_delete_ok">ок</string>
 </resources>
